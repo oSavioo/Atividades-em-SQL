@@ -1,0 +1,71 @@
+Mais detalhado:
+
+//No início, foi preciso estruturar o banco de dados. Criei quatro tabelas principais:
+
+CREATE TABLE autores (
+    autor_id SERIAL PRIMARY KEY,
+    nome_autor VARCHAR(100) NOT NULL
+);
+CREATE TABLE: Define uma nova tabela.
+SERIAL PRIMARY KEY: Cria uma chave primária que se auto-incrementa.
+VARCHAR(100) NOT NULL: Define um campo de texto de até 100 caracteres, que não pode ficar vazio.
+
+
+//Depois, criei a tabela livros, vinculando-a à tabela de autores:
+
+CREATE TABLE livros (
+    livro_id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    autor_id INT REFERENCES autores(autor_id)
+);
+
+
+//Depois de criar as tabelas, adicionei alguns registros de exemplo usando o INSERT INTO:
+
+INSERT INTO autores (nome_autor) VALUES ('Sophia'), ('Marcos'), ('Luis');
+
+//Para inserir livros e associá-los aos autores:
+
+INSERT INTO livros (titulo, autor_id) VALUES 
+('Pequeno Príncipe', 1),
+('Diário de um Banana', 2),
+('Maus', 3);
+
+
+//Com os dados no banco, precisei criar algumas consultas para facilitar o acesso às informações. Buscar todos os livros e seus autores
+
+SELECT l.titulo AS nome_livro, a.nome_autor
+FROM livros l
+JOIN autores a ON l.autor_id = a.autor_id;
+
+-SELECT: Define quais colunas serão exibidas.
+-AS: Dá um apelido para a coluna, tornando o resultado mais legível.
+-JOIN: Relaciona tabelas diferentes (neste caso, livros e autores).
+-ON: Define a condição para juntar os dados.
+
+
+//Listar os empréstimos com nomes dos alunos e livros. Essa consulta retorna uma lista de empréstimos, mostrando quem pegou o livro, qual livro foi emprestado e as datas envolvidas.
+
+SELECT 
+    u.nome_usuario AS aluno,
+    l.titulo AS livro,
+    e.data_emprestimo,
+    e.data_devolucao
+FROM emprestimos e
+JOIN usuarios u ON e.usuario_id = u.usuario_id
+JOIN livros l ON e.livro_id = l.livro_id;
+
+//Criando funções para cálculos.Um dos desafios foi lidar com atrasos na devolução dos livros. Para isso, criei uma função para calcular a multa com base nos dias de atraso:
+
+CREATE OR REPLACE FUNCTION calcular_multa(
+    data_devolucao DATE, 
+    data_prevista DATE, 
+    taxa_diaria NUMERIC
+) RETURNS NUMERIC AS $$
+DECLARE
+    dias_atraso INT;
+BEGIN
+    dias_atraso := GREATEST(0, data_devolucao - data_prevista);
+    RETURN dias_atraso * taxa_diaria;
+END;
+$$ LANGUAGE plpgsql;
