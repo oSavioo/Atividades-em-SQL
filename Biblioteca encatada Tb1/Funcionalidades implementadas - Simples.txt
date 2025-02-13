@@ -1,32 +1,33 @@
 ✅ Criação de tabelas:
-
 autores: Armazena os dados dos autores dos livros.
 livros: Registra os livros e seus respectivos autores.
 usuarios: Representa os alunos que realizam empréstimos.
 emprestimos: Controla os empréstimos e devoluções dos livros.
-✅ Inserção de Dados:
 
+✅ Inserção de Dados:
 População inicial do banco com autores, livros e usuários.
 Registro de empréstimos, incluindo casos em andamento.
-✅ Consultas SQL Avançadas:
 
+✅ Consultas SQL Avançadas:
 Consulta detalhada de empréstimos, exibindo nomes dos alunos, livros e autores.
 Listagem de todos os livros disponíveis e seus respectivos autores.
 Consulta de alunos que realizaram empréstimos e os livros lidos por cada um.
 Identificação dos autores mais populares com base no número de empréstimos.
 Cálculo do tempo médio de leitura dos alunos nos últimos 6 meses.
-✅ Funções PL/pgSQL:
 
+✅ Funções PL/pgSQL:
 calcular_multa(data_devolucao, data_prevista, taxa_diaria): Calcula a multa para devoluções em atraso.
 relatorio_leitura_dias(usuario_id): Gera um relatório dos livros lidos por um aluno nos últimos 6 meses.
 popularidade_autores(): Retorna um ranking dos autores mais lidos.
-✅ Criação de Visão (VIEW):
 
+✅ Criação de Visão (VIEW):
 emprestimos_detalhados: Uma visão que reúne informações detalhadas sobre os empréstimos, facilitando consultas rápidas.
+
 🛠 Tecnologias Utilizadas:
 PostgreSQL
 PL/pgSQL (para funções e procedimentos armazenados)
 SQL para modelagem e consultas
+
 📖 O que foi aprendido?
 Estruturação de um banco de dados relacional desde a modelagem até a implementação.
 Uso de chaves estrangeiras para garantir integridade referencial.
